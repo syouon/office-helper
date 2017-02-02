@@ -12,6 +12,8 @@
     <properties>
         <java.version>1.8</java.version>
         <maven-compiler.version>3.6.1</maven-compiler.version>
+        <slf4j.version>1.7.22</slf4j.version>
+        <logback.version>1.1.9</logback.version>
     </properties>
 
     <modules>
@@ -20,6 +22,20 @@
         <module>service</module>
         <module>web</module>
     </modules>
+
+    <dependencies>
+        <!-- LOGGING -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
