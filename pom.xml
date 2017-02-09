@@ -17,6 +17,13 @@
 
     <properties>
         <java.version>1.8</java.version>
+
+        <javax.inject.version>1</javax.inject.version>
+
+        <!-- DATABASE CREDENTIALS -->
+        <mysql.database>officehelper_db</mysql.database>
+        <mysql.user>developer</mysql.user>
+        <mysql.password>d3v3l0p3r</mysql.password>
     </properties>
 
     <modules>
@@ -25,6 +32,17 @@
         <module>service</module>
         <module>web</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Dependency Injection Annotation -->
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${javax.inject.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!-- LOGGING -->
@@ -38,5 +56,4 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
-
 </project>
