@@ -5,7 +5,8 @@ USE officehelper_db;
 CREATE TABLE user (
   id    SERIAL,
   email VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  UNIQUE (email)
 );
 
 CREATE TABLE request (
@@ -23,6 +24,6 @@ CREATE TABLE request (
   FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE USER 'developer'@'localhost' IDENTIFIED BY 'd3v3l0p3r';
+CREATE USER IF NOT EXISTS 'developer'@'localhost' IDENTIFIED BY 'd3v3l0p3r';
 GRANT ALL PRIVILEGES ON `officehelper_db`.* TO 'developer'@'localhost';
 FLUSH PRIVILEGES;
