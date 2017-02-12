@@ -97,4 +97,8 @@ public class Request {
     public void setReceptionDate(Date receptionDate) {
         this.receptionDate = receptionDate;
     }
+
+    public Long getUserId() {
+        return user.getId();
+    }
 }
