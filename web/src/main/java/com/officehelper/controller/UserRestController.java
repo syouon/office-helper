@@ -3,6 +3,7 @@ package com.officehelper.controller;
 import com.officehelper.domain.User;
 import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.domain.exception.DuplicateEntityException;
+import com.officehelper.dto.ErrorResponse;
 import com.officehelper.service.UserService;
 import com.officehelper.service.command.AddUserCommand;
 import com.officehelper.service.command.UpdateUserCommand;
@@ -60,13 +61,13 @@ public class UserRestController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DataNotFoundException.class)
-    private String handleDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
+    private ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(DuplicateEntityException.class)
-    private String handleDuplicateEntityException(DuplicateEntityException e) {
-        return e.getMessage();
+    private ErrorResponse handleDuplicateEntityException(DuplicateEntityException e) {
+        return new ErrorResponse(e.getMessage());
     }
 }
