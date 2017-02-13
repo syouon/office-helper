@@ -1,24 +1,28 @@
 package com.officehelper.service.command;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
-/**
- * Created by 3ck0o on 2/12/2017.
- */
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class AddRequestCommand {
 
-    @NotBlank
+    @NotNull
     private Long userId;
 
     @NotBlank
+    @Size(min = 5, max = 100)
     private String title;
 
     private String description;
 
+    @URL
     private String url;
 
-    @NotBlank
-    private Integer quantity;
+    @Min(1)
+    private int quantity;
 
     public Long getUserId() {
         return userId;
@@ -44,11 +48,11 @@ public class AddRequestCommand {
         this.url = url;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

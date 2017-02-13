@@ -6,10 +6,6 @@ import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by 3ck0o on 2/12/2017.
- */
-
 @Component
 public class RequestCommandMapper {
     public Request toRequest(AddRequestCommand command) {

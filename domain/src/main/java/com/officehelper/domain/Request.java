@@ -1,10 +1,8 @@
 package com.officehelper.domain;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-/**
- * Created by 3ck0o on 2/12/2017.
- */
 public class Request {
 
     private Long id;
@@ -12,9 +10,9 @@ public class Request {
     private String title;
     private String description;
     private String url;
-    private Integer quantity;
-    private RequestStatus status;
-    private Date creationDate;
+    private int quantity;
+    private RequestStatus status = RequestStatus.NEW;
+    private LocalDateTime creationDate = LocalDateTime.now();
     private Date orderDate;
     private Date receptionDate;
 
@@ -58,11 +56,11 @@ public class Request {
         this.url = url;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -74,11 +72,11 @@ public class Request {
         this.status = status;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

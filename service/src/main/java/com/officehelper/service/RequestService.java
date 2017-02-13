@@ -6,9 +6,6 @@ import com.officehelper.service.command.UpdateRequestCommand;
 
 import java.util.List;
 
-/**
- * Created by 3ck0o on 2/12/2017.
- */
 public interface RequestService {
 
     Request save(AddRequestCommand requestCommand);

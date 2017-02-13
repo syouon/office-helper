@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    User get(long id);
-
     User save(User user);
 
     boolean update(User user);

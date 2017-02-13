@@ -2,7 +2,7 @@ package com.officehelper.controller;
 
 import com.officehelper.domain.Request;
 import com.officehelper.domain.exception.DataNotFoundException;
-import com.officehelper.domain.exception.DuplicateEntityException;
+import com.officehelper.dto.ErrorResponse;
 import com.officehelper.service.RequestService;
 import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
@@ -12,33 +12,35 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import java.util.List;
-
-/**
- * Created by 3ck0o on 2/12/2017.
- */
 
 @RestController
 @RequestMapping("/requests")
 public class RequestRestController {
 
-    @Inject
     private RequestService requestService;
 
+    @Inject
+    public RequestRestController(RequestService requestService) {
+        this.requestService = requestService;
+    }
+
     @PostMapping
-    public ResponseEntity<Request> save(@RequestBody AddRequestCommand command, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+    public ResponseEntity<Request> save(@RequestBody @Valid AddRequestCommand command, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Request>(requestService.save(command), HttpStatus.CREATED);
+        return new ResponseEntity<>(requestService.save(command), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<Request> update(@RequestBody UpdateRequestCommand command, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity update(@RequestBody @Valid UpdateRequestCommand command, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<Request>(requestService.update(command), HttpStatus.NO_CONTENT);
+        requestService.update(command);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{id}")
@@ -58,17 +60,7 @@ public class RequestRestController {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DataNotFoundException.class)
-    private String handleDataNotFoundException(DataNotFoundException e) {
-        return e.getMessage();
-    }
-
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DuplicateEntityException.class)
-    private String handleDuplicateEntityException(DuplicateEntityException e) {
-        return e.getMessage();
-    }
-    
-    public void setRequestService(RequestService requestService) {
-        this.requestService = requestService;
+    private ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
     }
 }

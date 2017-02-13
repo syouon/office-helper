@@ -2,12 +2,12 @@ package com.officehelper.repository.impl;
 
 import com.officehelper.domain.Request;
 import com.officehelper.domain.RequestStatus;
+import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.jooq.tables.records.RequestRecord;
 import com.officehelper.repository.RequestRepository;
 import com.officehelper.repository.mapper.RequestRecordMapper;
 import org.jooq.DSLContext;
 import org.jooq.types.ULong;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;
@@ -15,74 +15,80 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.officehelper.jooq.Tables.REQUEST;
-
-/**
- * Created by 3ck0o on 2/12/2017.
- */
+import static com.officehelper.jooq.tables.User.USER;
 
 @Repository
 public class RequestRepositoryImpl implements RequestRepository {
 
-    @Inject
     private DSLContext create;
+    private RequestRecordMapper requestRecordMapper;
 
     @Inject
-    private RequestRecordMapper requestRecordMapper;
+    public RequestRepositoryImpl(DSLContext create, RequestRecordMapper requestRecordMapper) {
+        this.create = create;
+        this.requestRecordMapper = requestRecordMapper;
+    }
 
     @Override
     public Request save(Request request) {
-        RequestRecord requestRecord = create.newRecord(REQUEST, request);
-        requestRecord.store();
-        return requestRecordMapper.map(requestRecord);
+        RequestRecord record = create.newRecord(REQUEST, request);
+        record.store();
+        return get(record.getId().longValue());
     }
 
     @Override
-    public boolean update(Request request) {
-        RequestRecord requestRecord = create.newRecord(REQUEST, request);
-        return create.executeUpdate(requestRecord) > 0;
-    }
-
-    @Override
-    public Optional<Request> delete(long id) {
-        Optional<Request> request = findOne(id);
-        if (request.isPresent()) {
-            create.newRecord(REQUEST, request.get()).delete();
-            return request;
+    public Request update(Request request) {
+        RequestRecord record = create.newRecord(REQUEST, request);
+        if (create.executeUpdate(record) == 0) {
+            throw new DataNotFoundException(String.format("Impossible to update request [%d]", request.getId()));
         }
-        return Optional.empty();
+        return get(request.getId());
+    }
+
+    @Override
+    public boolean delete(long id) {
+        return create.delete(REQUEST)
+                .where(REQUEST.ID.equal(ULong.valueOf(id)))
+                .execute() > 0;
     }
 
     @Override
     public List<Request> findAll() {
-        return create.selectFrom(REQUEST).fetch(requestRecordMapper);
+        return create.select()
+                .from(REQUEST)
+                .join(USER).on(USER.ID.equal(REQUEST.USER_ID))
+                .fetch(requestRecordMapper);
     }
 
     @Override
     public Optional<Request> findOne(long id) {
-        return create.selectFrom(REQUEST)
+        return create.select()
+                .from(REQUEST)
+                .join(USER).on(USER.ID.equal(REQUEST.USER_ID))
                 .where(REQUEST.ID.equal(ULong.valueOf(id)))
                 .fetchOptional(requestRecordMapper);
     }
 
     @Override
+    public Request get(long id) {
+        return findOne(id).orElseThrow(() -> new DataNotFoundException(String.format("Impossible to find request [%d]", id)));
+    }
+
+    @Override
     public List<Request> findByUser(long userId) {
-        return create.selectFrom(REQUEST)
+        return create.select()
+                .from(REQUEST)
+                .join(USER).on(USER.ID.equal(REQUEST.USER_ID))
                 .where(REQUEST.USER_ID.equal(ULong.valueOf(userId)))
                 .fetch(requestRecordMapper);
     }
 
     @Override
     public List<Request> findByStatus(RequestStatus status) {
-        return create.selectFrom(REQUEST)
+        return create.select()
+                .from(REQUEST)
+                .join(USER).on(USER.ID.equal(REQUEST.USER_ID))
                 .where(REQUEST.STATUS.equal(status.toString()))
                 .fetch(requestRecordMapper);
-    }
-
-    public void setCreate(DSLContext create) {
-        this.create = create;
-    }
-
-    public void setRequestRecordMapper(RequestRecordMapper requestRecordMapper) {
-        this.requestRecordMapper = requestRecordMapper;
     }
 }

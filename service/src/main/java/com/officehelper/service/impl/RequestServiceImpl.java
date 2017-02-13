@@ -1,7 +1,6 @@
 package com.officehelper.service.impl;
 
 import com.officehelper.domain.Request;
-import com.officehelper.domain.RequestStatus;
 import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.repository.RequestRepository;
 import com.officehelper.service.RequestService;
@@ -14,66 +13,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Date;
 import java.util.List;
-
-/**
- * Created by 3ck0o on 2/12/2017.
- */
+import java.util.Optional;
 
 @Service
 public class RequestServiceImpl implements RequestService {
 
-    private static final String REQUEST_ID_NOT_FOUND_MESSAGE = "Request with id %d does not exist";
-
+    private static final String REQUEST_ID_NOT_FOUND_MESSAGE = "Request [%d] does not exist";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Inject
-    RequestCommandMapper requestCommandMapper;
+    private RequestCommandMapper requestCommandMapper;
+    private RequestRepository requestRepository;
 
     @Inject
-    RequestRepository requestRepository;
+    public RequestServiceImpl(RequestCommandMapper requestCommandMapper, RequestRepository requestRepository) {
+        this.requestCommandMapper = requestCommandMapper;
+        this.requestRepository = requestRepository;
+    }
 
     @Override
     @Transactional
     public Request save(AddRequestCommand requestCommand) {
         Request request = requestCommandMapper.toRequest(requestCommand);
-        request.setStatus(RequestStatus.NEW);
-        request.setCreationDate(new Date());
-        return requestRepository.save(request);
+        Request newRequest = requestRepository.save(request);
+        logger.info("Added new request [{}]", newRequest.getId());
+        return newRequest;
     }
 
     @Override
     @Transactional
     public Request update(UpdateRequestCommand requestCommand) {
         Request request = requestCommandMapper.toRequest(requestCommand);
-        if(!requestRepository.update(request)) {
-            logger.warn("unable to find request {}", request);
-            throw new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, request.getId()));
-        }
-        return request;
+        logger.info("Updated request [{}]", request.getId());
+        return requestRepository.update(request);
     }
 
     @Override
     @Transactional
     public Request delete(long id) {
-        return requestRepository.delete(id).orElseThrow(() -> {
-            logger.warn("unable to delete request with id {}", id);
-            return new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, id));
-        });
+        Request request = requestRepository.get(id);
+        if(!requestRepository.delete(id)) {
+            logger.warn("Unable to find request [{}] for deletion", id);
+            throw new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, id));
+        }
+        return request;
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Request> findAll() {
         return requestRepository.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Request getOne(long id) {
         return requestRepository.findOne(id).orElseThrow(() -> {
-            logger.warn("unable to find request with id {}", id);
+            logger.warn("Unable to find request [{}]", id);
             return new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, id));
         });
     }

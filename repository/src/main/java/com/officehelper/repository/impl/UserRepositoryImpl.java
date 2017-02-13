@@ -27,13 +27,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(long id) {
-        return create.selectFrom(USER)
-                .where(USER.ID.equal(ULong.valueOf(id)))
-                .fetchOne(mapper);
-    }
-
-    @Override
     public User save(User user) {
         UserRecord userRecord = create.newRecord(USER, user);
         userRecord.store();
