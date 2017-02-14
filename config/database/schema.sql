@@ -14,7 +14,7 @@ CREATE TABLE request (
   title           VARCHAR(255) NOT NULL,
   description     TEXT,
   url             VARCHAR(255),
-  quantity        INT,
+  quantity        INT NOT NULL,
   status          VARCHAR(10) NOT NULL,
   creation_date   TIMESTAMP NOT NULL,
   order_date      TIMESTAMP NULL,
