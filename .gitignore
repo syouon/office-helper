@@ -14,3 +14,8 @@ hs_err_pid*
 #Build directories
 target
 classes
+
+#Node modules
+front/node_modules
+front/dist
+*.log
