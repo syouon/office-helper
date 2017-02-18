@@ -1,0 +1,204 @@
+body {
+  background-image: url("../img/background.png");
+  overflow-x: hidden;
+
+  .material-icons {
+    line-height: inherit;
+  }
+}
+
+
+#login-splash {
+  position: absolute;
+  z-index: 1500;
+  width: 100%;
+  min-height: 100%;
+  background: black url("../img/login-splash.jpg") center fixed;
+  background-size: cover;
+  transition: all 1s;
+  padding-top: 30px;
+  padding-bottom: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  #login-box {
+    max-width: 384px;
+
+    .img-responsive {
+      margin: auto;
+    }
+
+    .panel {
+      margin-top: 60px;
+    }
+  }
+}
+
+#login-splash.toggled {
+  margin-left: -100%;
+}
+
+#wrapper {
+  padding-left: $sidebar-width;
+  transition: all 0.5s ease;
+
+  @media(max-width: $screen-sm-min) {
+    padding-left: 0;
+
+    .close-menu {
+      display: none;
+    }
+
+    &.toggled {
+      padding-left: $sidebar-width;
+
+      #sidebar-wrapper {
+        width: $sidebar-width;
+      }
+
+      #toggle-menu-button a {
+        text-decoration: none;
+
+        .open-menu {
+          display: none;
+        }
+
+        .close-menu {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: $sidebar-width;
+  width: $sidebar-width;
+  height: 100%;
+  margin-left: -$sidebar-width;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: $gray-darker;
+  transition: all 0.5s ease;
+
+  @media(max-width: $screen-sm-min) {
+    width: 0;
+  }
+
+  #logo-button {
+    background-color: $brand-primary;
+    width: $sidebar-width;
+    height: $topbar-height;
+    text-align: center;
+    line-height: $topbar-height;
+
+    img {
+      width: 45px;
+    }
+  }
+
+  .sidebar-button {
+    display: block;
+    width: $sidebar-width;
+    height: 54px;
+    text-align: center;
+    color: white;
+    background-color: $gray-darker;
+    font-size: 15px;
+    line-height: 54px;
+  }
+
+  .sidebar-button:hover {
+    border-left: 4px solid $brand-primary;
+    width: $sidebar-width + 4;
+    color: $gray-darker;
+    transition: 0.3s ease;
+    background-color: $gray-lighter;
+  }
+}
+
+#page-wrapper {
+  position: relative;
+  margin-right: 0;
+  width: 100%;
+  transition: all 0.5s ease;
+
+  @media(max-width: $screen-sm-min) {
+    position: absolute;
+    margin-right: -$sidebar-width;
+  }
+}
+
+#top-bar {
+  z-index: 900;
+  height: $topbar-height;
+  background-color: lighten($gray-base, 96%);
+  padding-left: 0;
+  position: fixed;
+  box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.05);
+  margin-left: -$sidebar-width;
+  width: 100%;
+
+  @media(max-width: $screen-sm-min) {
+    background-color: $brand-primary;
+    margin-left: 0;
+  }
+
+  #user-menu {
+    height: 100%;
+    padding-right: 2em;
+    line-height: $topbar-height;
+  }
+
+  #user-menu > a {
+    font-weight: bold;
+    color: dimgray;
+
+    @media(max-width: $screen-sm-min) {
+      color: $gray-lighter;
+    }
+  }
+
+  #toggle-menu-button {
+    font-size: 1.3em;
+    padding-left: 0.5em;
+    line-height: $topbar-height;
+
+    a {
+      color: $gray-dark;
+
+      @media(max-width: $screen-sm-min) {
+        color: $gray-lighter;
+      }
+    }
+  }
+}
+
+#page-content {
+  padding: $topbar-height + 15px 15px 15px;
+
+  @media(max-width: $screen-sm-min) {
+    padding: $topbar-height 0 0;
+  }
+
+  .page-block {
+    background-color: white;
+    padding: 1em;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.05);
+    width: 100%;
+  }
+}
+
+.page-title {
+  border-left: 7px solid $brand-primary;
+  padding-left: 0.3em;
+  margin-bottom: 20px;
+}
