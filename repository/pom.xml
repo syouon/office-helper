@@ -61,7 +61,7 @@
                 <configuration>
                     <jdbc>
                         <driver>com.mysql.jdbc.Driver</driver>
-                        <url>jdbc:mysql://localhost:3306/${mysql.database}</url>
+                        <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}</url>
                         <user>${mysql.user}</user>
                         <password>${mysql.password}</password>
                     </jdbc>
