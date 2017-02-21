@@ -24,6 +24,5 @@ CREATE TABLE request (
   FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-CREATE USER IF NOT EXISTS 'developer'@'localhost' IDENTIFIED BY 'd3v3l0p3r';
-GRANT ALL PRIVILEGES ON `officehelper_db`.* TO 'developer'@'localhost';
+GRANT ALL PRIVILEGES ON `officehelper_db`.* TO 'developer'@'localhost' IDENTIFIED BY 'd3v3l0p3r';
 FLUSH PRIVILEGES;
