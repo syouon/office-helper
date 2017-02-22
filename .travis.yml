@@ -3,4 +3,4 @@ jdk: oraclejdk8
 
 services: mysql
 
-install: mysql -u root < config/database/schema.sql
+before_install: mysql -u root < config/database/schema.sql
