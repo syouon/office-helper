@@ -32,9 +32,9 @@ public class RequestRecordMapper implements RecordMapper<Record, Request> {
         request.setCreationDate(requestRecord.getCreationDate().toLocalDateTime());
         request.setDescription(requestRecord.getDescription());
         request.setId(requestRecord.getId().longValue());
-        request.setOrderDate(requestRecord.getOrderDate());
+        request.setOrderDate(requestRecord.getOrderDate().toLocalDateTime());
         request.setQuantity(requestRecord.getQuantity());
-        request.setReceptionDate(requestRecord.getReceptionDate());
+        request.setReceptionDate(requestRecord.getReceptionDate().toLocalDateTime());
         request.setStatus(requestStatusConverter.from(requestRecord.getStatus()));
         request.setTitle(requestRecord.getTitle());
         request.setUrl(requestRecord.getUrl());

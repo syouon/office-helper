@@ -13,8 +13,8 @@ public class Request {
     private int quantity;
     private RequestStatus status = RequestStatus.NEW;
     private LocalDateTime creationDate = LocalDateTime.now();
-    private Date orderDate;
-    private Date receptionDate;
+    private LocalDateTime orderDate;
+    private LocalDateTime receptionDate;
 
     public Long getId() {
         return id;
@@ -80,19 +80,19 @@ public class Request {
         this.creationDate = creationDate;
     }
 
-    public Date getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
-    public Date getReceptionDate() {
+    public LocalDateTime getReceptionDate() {
         return receptionDate;
     }
 
-    public void setReceptionDate(Date receptionDate) {
+    public void setReceptionDate(LocalDateTime receptionDate) {
         this.receptionDate = receptionDate;
     }
 
