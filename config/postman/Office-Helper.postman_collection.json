@@ -1,0 +1,179 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Office-Helper",
+		"_postman_id": "9d5324c1-d8db-0d88-d170-ea029ee4c37e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requests",
+			"description": "",
+			"item": [
+				{
+					"name": "List requests",
+					"request": {
+						"url": "{{ROOT_URL}}/requests",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add request",
+					"request": {
+						"url": "{{ROOT_URL}}/requests",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userId\": 1,\n\t\"title\": \"Post-its\",\n\t\"description\": \"For the agile thing\",\n\t\"url\": \"http://www.postitsurl.com\",\n\t\"quantity\": 1000\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update request",
+					"request": {
+						"url": "{{ROOT_URL}}/requests",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 2,\n\t\"userId\": 1,\n\t\"title\": \"Post-its\",\n\t\"description\": \"For the agile thing\",\n\t\"url\": \"http://www.postitsurl.com\",\n\t\"quantity\": 1000\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete request",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id"
+							],
+							"variable": [
+								{
+									"value": "1",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"description": "",
+			"item": [
+				{
+					"name": "List users",
+					"request": {
+						"url": "{{ROOT_URL}}/users",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add user",
+					"request": {
+						"url": "{{ROOT_URL}}/users",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"firstname.lastname@domain.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"url": "{{ROOT_URL}}/users",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 1,\n\t\"email\": \"firstname.lastname@domain.com\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/users/:user_id",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"users",
+								":user_id"
+							],
+							"variable": [
+								{
+									"value": "1",
+									"id": "user_id"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
