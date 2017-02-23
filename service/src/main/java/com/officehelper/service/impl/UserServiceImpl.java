@@ -22,8 +22,9 @@ public class UserServiceImpl implements UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static final String USER_ID_NOT_FOUND_MESSAGE = "User with id %d does not exist";
-    private static final String USER_EMAIL_ALREADY_EXISTS_MESSAGE = "A user with email %s already exists";
+    private static final String USER_ID_NOT_FOUND_MESSAGE = "User [%d] does not exist";
+    private static final String USER_EMAIL_ALREADY_EXISTS_MESSAGE = "A user with email '%s' already exists";
+    private static final String USER_EMAIL_DOES_NOT_EXIST_MESSAGE = "User with email '%s' does not exist";
 
     private UserRepository userRepository;
     private UserCommandMapper mapper;
@@ -38,11 +39,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(AddUserCommand command) {
         User user = mapper.toUser(command);
-        logger.info("saving user {}", user);
+        logger.info("Saving user {}", user);
         try {
             return userRepository.save(user);
         } catch (DuplicateKeyException e) {
-            logger.warn("unable to save {}", user);
+            logger.warn("Unable to save {}", user);
             throw new DuplicateEntityException(String.format(USER_EMAIL_ALREADY_EXISTS_MESSAGE, user.getEmail()));
         }
     }
@@ -51,14 +52,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(UpdateUserCommand command) {
         User user = mapper.toUser(command);
-        logger.info("updating user {}", user);
+        logger.info("Updating user {}", user);
         try {
             if (!userRepository.update(user)) {
-                logger.warn("unable to find user {}", user);
+                logger.warn("Unable to find user {}", user);
                 throw new DataNotFoundException(String.format(USER_ID_NOT_FOUND_MESSAGE, user.getId()));
             }
         } catch (DuplicateKeyException e) {
-            logger.warn("unable to update {}", user);
+            logger.warn("Unable to update {}", user);
             throw new DuplicateEntityException(String.format(USER_EMAIL_ALREADY_EXISTS_MESSAGE, user.getEmail()));
         }
     }
@@ -66,9 +67,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User delete(long id) {
-        logger.info("deleting user with id {}", id);
+        logger.info("Deleting user [{}]", id);
         return userRepository.delete(id).orElseThrow(() -> {
-            logger.warn("unable to delete user with id {}", id);
+            logger.warn("Unable to delete user [{}]", id);
             return new DataNotFoundException(String.format(USER_ID_NOT_FOUND_MESSAGE, id));
         });
     }
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getOne(long id) {
         return userRepository.findOne(id).orElseThrow(() -> {
-            logger.warn("unable to find user with id {}", id);
+            logger.warn("Unable to find user [{}]", id);
             return new DataNotFoundException(String.format(USER_ID_NOT_FOUND_MESSAGE, id));
         });
     }
@@ -92,8 +93,8 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> {
-            logger.warn("unable to find user with email {}", email);
-            return new DataNotFoundException("User with email " + email + " does not exist");
+            logger.warn("Unable to find user with email '{}'", email);
+            return new DataNotFoundException(String.format(USER_EMAIL_DOES_NOT_EXIST_MESSAGE, email));
         });
     }
 }
