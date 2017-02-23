@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         UserRecord userRecord = create.newRecord(USER, user);
         userRecord.store();
-        return userRecord.map(mapper);
+        return mapper.map(userRecord);
     }
 
     @Override
@@ -53,9 +53,8 @@ public class UserRepositoryImpl implements UserRepository {
         if (recordOptional.isPresent()) {
             recordOptional.get().delete();
             return recordOptional.map(mapper::map);
-        } else {
-            return Optional.empty();
         }
+        return Optional.empty();
     }
 
     @Override

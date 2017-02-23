@@ -1,20 +1,18 @@
 package com.officehelper.repository.mapper;
 
 import com.officehelper.domain.User;
-import org.jooq.Record;
+import com.officehelper.jooq.tables.records.UserRecord;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
-import static com.officehelper.jooq.tables.User.USER;
-
 @Component
-public class UserRecordMapper implements RecordMapper<Record, User> {
+public class UserRecordMapper implements RecordMapper<UserRecord, User> {
 
     @Override
-    public User map(Record record) {
+    public User map(UserRecord userRecord) {
         return new User(
-                record.getValue(USER.ID).longValue(),
-                record.getValue(USER.EMAIL)
+                userRecord.getId().longValue(),
+                userRecord.getEmail()
         );
     }
 }
