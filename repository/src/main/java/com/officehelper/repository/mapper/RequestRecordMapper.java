@@ -1,7 +1,6 @@
 package com.officehelper.repository.mapper;
 
 import com.officehelper.domain.Request;
-import com.officehelper.domain.User;
 import com.officehelper.jooq.tables.records.RequestRecord;
 import com.officehelper.jooq.tables.records.UserRecord;
 import com.officehelper.repository.converter.RequestStatusConverter;
@@ -10,6 +9,7 @@ import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
 
 @Component
 public class RequestRecordMapper implements RecordMapper<Record, Request> {
@@ -32,9 +32,13 @@ public class RequestRecordMapper implements RecordMapper<Record, Request> {
         request.setCreationDate(requestRecord.getCreationDate().toLocalDateTime());
         request.setDescription(requestRecord.getDescription());
         request.setId(requestRecord.getId().longValue());
-        request.setOrderDate(requestRecord.getOrderDate().toLocalDateTime());
+
+        Timestamp orderDate = requestRecord.getOrderDate();
+        request.setOrderDate(orderDate == null ? null : orderDate.toLocalDateTime());
+        Timestamp receptionDate = requestRecord.getReceptionDate();
+        request.setReceptionDate(receptionDate == null ? null : receptionDate.toLocalDateTime());
+
         request.setQuantity(requestRecord.getQuantity());
-        request.setReceptionDate(requestRecord.getReceptionDate().toLocalDateTime());
         request.setStatus(requestStatusConverter.from(requestRecord.getStatus()));
         request.setTitle(requestRecord.getTitle());
         request.setUrl(requestRecord.getUrl());
