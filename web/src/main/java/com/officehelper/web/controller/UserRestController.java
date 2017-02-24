@@ -1,9 +1,9 @@
-package com.officehelper.controller;
+package com.officehelper.web.controller;
 
 import com.officehelper.domain.User;
 import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.domain.exception.DuplicateEntityException;
-import com.officehelper.dto.ErrorResponse;
+import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.service.UserService;
 import com.officehelper.service.command.AddUserCommand;
 import com.officehelper.service.command.UpdateUserCommand;

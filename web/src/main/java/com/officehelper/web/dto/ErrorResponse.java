@@ -1,4 +1,4 @@
-package com.officehelper.dto;
+package com.officehelper.web.dto;
 
 public class ErrorResponse {
 

@@ -1,8 +1,8 @@
-package com.officehelper.controller;
+package com.officehelper.web.controller;
 
 import com.officehelper.domain.Request;
 import com.officehelper.domain.exception.DataNotFoundException;
-import com.officehelper.dto.ErrorResponse;
+import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.service.RequestService;
 import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
