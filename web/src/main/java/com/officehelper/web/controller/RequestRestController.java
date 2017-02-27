@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class RequestRestController {
 
     private RequestService requestService;
-    private RequestDtoMapper dtoMapper;
+    private final RequestDtoMapper dtoMapper;
 
     @Inject
     public RequestRestController(RequestService requestService, RequestDtoMapper dtoMapper) {
@@ -61,7 +61,7 @@ public class RequestRestController {
     }
 
     @GetMapping("/{id}")
-    public RequestDto findOne(@PathVariable Long id) {
+    public RequestDto findOne(@PathVariable long id) {
         return dtoMapper.from(requestService.getOne(id));
     }
 
