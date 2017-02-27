@@ -1,0 +1,6 @@
+mysql-server:
+  image: mysql
+  ports:
+    - "3306:3306"
+  volumes:
+    - ./db-scripts:/docker-entrypoint-initdb.d

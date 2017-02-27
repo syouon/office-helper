@@ -22,6 +22,7 @@
 
         <!-- DATABASE CREDENTIALS -->
         <mysql.database>officehelper_db</mysql.database>
+        <mysql.port>3306</mysql.port>
         <mysql.user>developer</mysql.user>
         <mysql.password>d3v3l0p3r</mysql.password>
     </properties>
