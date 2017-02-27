@@ -55,7 +55,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public User findOne(@PathVariable Long id) {
+    public User findOne(@PathVariable long id) {
         return userService.getOne(id);
     }
 

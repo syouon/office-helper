@@ -1,11 +1,12 @@
 package com.officehelper.web.controller;
 
-import com.officehelper.domain.Request;
 import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.service.RequestService;
 import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
+import com.officehelper.web.dto.RequestDto;
+import com.officehelper.web.dto.mapper.RequestDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,24 +15,28 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/requests")
 public class RequestRestController {
 
     private RequestService requestService;
+    private final RequestDtoMapper dtoMapper;
 
     @Inject
-    public RequestRestController(RequestService requestService) {
+    public RequestRestController(RequestService requestService, RequestDtoMapper dtoMapper) {
         this.requestService = requestService;
+        this.dtoMapper = dtoMapper;
     }
 
     @PostMapping
-    public ResponseEntity<Request> save(@RequestBody @Valid AddRequestCommand command, BindingResult bindingResult) {
+    public ResponseEntity<RequestDto> save(@RequestBody @Valid AddRequestCommand command, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(requestService.save(command), HttpStatus.CREATED);
+        RequestDto dto = dtoMapper.from(requestService.save(command));
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 
     @PutMapping
@@ -44,18 +49,20 @@ public class RequestRestController {
     }
 
     @DeleteMapping("/{id}")
-    public Request delete(@PathVariable long id) {
-        return requestService.delete(id);
+    public RequestDto delete(@PathVariable long id) {
+        return dtoMapper.from(requestService.delete(id));
     }
 
     @GetMapping
-    public List<Request> findAll() {
-        return requestService.findAll();
+    public List<RequestDto> findAll() {
+        return requestService.findAll().stream()
+                .map(dtoMapper::from)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Request findOne(@PathVariable Long id) {
-        return requestService.getOne(id);
+    public RequestDto findOne(@PathVariable long id) {
+        return dtoMapper.from(requestService.getOne(id));
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
