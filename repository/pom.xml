@@ -40,6 +40,41 @@
 
     <build>
         <plugins>
+            <!-- MYSQL DATABASE INIT -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>${sql-maven.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>${mysql.driver}</driver>
+                    <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}</url>
+                    <username>${mysql.root.user}</username>
+                    <password>${mysql.root.password}</password>
+                    <skip>${skipDbInit}</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <autocommit>true</autocommit>
+                            <srcFiles>
+                                <srcFile>../config/database/schema.sql</srcFile>
+                            </srcFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- JOOQ CODE GENERATOR -->
             <plugin>
                 <groupId>org.jooq</groupId>
@@ -60,8 +95,8 @@
                 </dependencies>
                 <configuration>
                     <jdbc>
-                        <driver>com.mysql.jdbc.Driver</driver>
-                        <url>jdbc:mysql://localhost:3306/${mysql.database}</url>
+                        <driver>${mysql.driver}</driver>
+                        <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}</url>
                         <user>${mysql.user}</user>
                         <password>${mysql.password}</password>
                     </jdbc>

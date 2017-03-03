@@ -4,3 +4,5 @@ jdk: oraclejdk8
 services: mysql
 
 before_install: mysql -u root < config/database/schema.sql
+
+install: mvn clean install -DskipDbInit -DskipTests -T1C
