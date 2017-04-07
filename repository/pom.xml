@@ -52,27 +52,28 @@
                         <version>${mysql.version}</version>
                     </dependency>
                 </dependencies>
-                <configuration>
-                    <driver>${mysql.driver}</driver>
-                    <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}</url>
-                    <username>${mysql.root.user}</username>
-                    <password>${mysql.root.password}</password>
-                    <skip>${skipDbInit}</skip>
-                </configuration>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <id>Init database</id>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>
                         <configuration>
                             <autocommit>true</autocommit>
                             <srcFiles>
-                                <srcFile>../config/database/schema.sql</srcFile>
+                                <srcFile>${sql.schema.location}</srcFile>
                             </srcFiles>
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <driver>${mysql.driver}</driver>
+                    <url>jdbc:mysql://localhost:${mysql.port}?useSSL=false</url>
+                    <username>${mysql.root.user}</username>
+                    <password>${mysql.root.password}</password>
+                    <skip>${skipDbInit}</skip>
+                </configuration>
             </plugin>
 
             <!-- JOOQ CODE GENERATOR -->
@@ -81,6 +82,8 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <executions>
                     <execution>
+                        <id>JOOQ class generation</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -96,7 +99,7 @@
                 <configuration>
                     <jdbc>
                         <driver>${mysql.driver}</driver>
-                        <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}</url>
+                        <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}?useSSL=false</url>
                         <user>${mysql.user}</user>
                         <password>${mysql.password}</password>
                     </jdbc>

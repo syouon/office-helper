@@ -31,6 +31,7 @@
         <mysql.root.password>root</mysql.root.password>
         <mysql.user>developer</mysql.user>
         <mysql.password>d3v3l0p3r</mysql.password>
+        <sql.schema.location>../config/database/schema.sql</sql.schema.location>
 
         <!-- Skip database's schema initialization -->
         <skipDbInit>false</skipDbInit>
