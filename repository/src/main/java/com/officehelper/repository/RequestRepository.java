@@ -23,5 +23,4 @@ public interface RequestRepository {
     List<Request> findByUser(long userId);
 
     List<Request> findByStatus(RequestStatus status);
-
 }

@@ -1,10 +1,11 @@
 package com.officehelper.web.controller;
 
 import com.officehelper.domain.exception.DataNotFoundException;
-import com.officehelper.web.dto.ErrorResponse;
+import com.officehelper.domain.exception.InvalidRequestStatusException;
 import com.officehelper.service.RequestService;
 import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
+import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.web.dto.RequestDto;
 import com.officehelper.web.dto.mapper.RequestDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -65,9 +66,45 @@ public class RequestRestController {
         return dtoMapper.from(requestService.getOne(id));
     }
 
+    @PostMapping("/{id}/accept")
+    public void accept(@PathVariable long id) {
+        requestService.accept(requestService.getOne(id));
+    }
+
+    @PostMapping("/{id}/refuse")
+    public void refuse(@PathVariable long id) {
+        requestService.refuse(requestService.getOne(id));
+    }
+
+    @PostMapping("/{id}/cancel")
+    public void cancel(@PathVariable long id) {
+        requestService.cancel(requestService.getOne(id));
+    }
+
+    @PostMapping("/{id}/order")
+    public void order(@PathVariable long id) {
+        requestService.order(requestService.getOne(id));
+    }
+
+    @PostMapping("/{id}/delivery/ok")
+    public void requestDelivered(@PathVariable long id) {
+        requestService.setAsDelivered(requestService.getOne(id));
+    }
+
+    @PostMapping("/{id}/delivery/failed")
+    public void requestNotDelivered(@PathVariable long id) {
+        requestService.setAsNotDelivered(requestService.getOne(id));
+    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DataNotFoundException.class)
     private ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(InvalidRequestStatusException.class)
+    private ErrorResponse handleInvalidRequestStatusException(InvalidRequestStatusException e) {
         return new ErrorResponse(e.getMessage());
     }
 }
