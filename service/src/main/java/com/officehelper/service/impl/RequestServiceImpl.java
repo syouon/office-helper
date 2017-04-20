@@ -120,7 +120,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     private void updateRequestWithNewStatus(Request request, RequestStatus newStatus) {
-        request.getStatus().failIfBadNextStatus(newStatus);
+        request.getStatus().verifyNextStatus(newStatus);
         request.setStatus(newStatus);
         requestRepository.update(request);
     }

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 public class InvalidRequestStatusException extends RuntimeException {
 
     public InvalidRequestStatusException(Collection<RequestStatus> nextStatus) {
-        super("Incompatible status, possible status are: " + convertToString(nextStatus));
+        super("Incompatible status, possible statuses are: " + convertToString(nextStatus));
     }
 
     private static String convertToString(Collection<RequestStatus> status) {
