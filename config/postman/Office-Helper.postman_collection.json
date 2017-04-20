@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "Office-Helper",
-		"_postman_id": "9d5324c1-d8db-0d88-d170-ea029ee4c37e",
+		"_postman_id": "d82ef520-d93b-516c-83b6-8dbcbb50c700",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -17,7 +17,10 @@
 						"url": "{{ROOT_URL}}/requests",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -36,7 +39,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userId\": 1,\n\t\"title\": \"Post-its\",\n\t\"description\": \"For the agile thing\",\n\t\"url\": \"http://www.postitsurl.com\",\n\t\"quantity\": 1000\n}"
+							"raw": "{\n  \"userId\": 1,\n  \"title\": \"Post-its\",\n  \"description\": \"For the agile thing\",\n  \"url\": \"http://www.postitsurl.com\",\n  \"quantity\": 1000\n}"
 						},
 						"description": ""
 					},
@@ -56,7 +59,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": 2,\n\t\"userId\": 1,\n\t\"title\": \"Post-its\",\n\t\"description\": \"For the agile thing\",\n\t\"url\": \"http://www.postitsurl.com\",\n\t\"quantity\": 1000\n}"
+							"raw": "{\n  \"id\": 4,\n  \"userId\": 1,\n  \"title\": \"Croissants !\",\n  \"url\": \"http://www.croissant.com\",\n  \"quantity\": 15\n}"
 						},
 						"description": ""
 					},
@@ -84,6 +87,179 @@
 						},
 						"method": "DELETE",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Accept request",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/accept",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"accept"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Refuse request",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/refuse",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"refuse"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel request",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/cancel",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"cancel"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Order request",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/order",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"order"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Complete request delivery",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/delivery/ok",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"delivery",
+								"ok"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Fail request delivery",
+					"request": {
+						"url": {
+							"raw": "{{ROOT_URL}}/requests/:request_id/delivery/failed",
+							"auth": {},
+							"host": [
+								"{{ROOT_URL}}"
+							],
+							"path": [
+								"requests",
+								":request_id",
+								"delivery",
+								"failed"
+							],
+							"variable": [
+								{
+									"value": "",
+									"id": "request_id"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
 						"body": {},
 						"description": ""
 					},
@@ -101,7 +277,10 @@
 						"url": "{{ROOT_URL}}/users",
 						"method": "GET",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
@@ -120,7 +299,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"firstname.lastname@domain.com\"\n}"
+							"raw": "{\n  \"email\": \"firstname.lastname@domain.com\"\n}"
 						},
 						"description": ""
 					},
@@ -140,7 +319,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"id\": 1,\n\t\"email\": \"firstname.lastname@domain.com\"\n}"
+							"raw": "{\n  \"id\": 1,\n  \"email\": \"firstname.lastname@domain.com\"\n}"
 						},
 						"description": ""
 					},
@@ -168,7 +347,10 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {},
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"description": ""
 					},
 					"response": []
