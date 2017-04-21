@@ -44,7 +44,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>${properties-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -89,7 +89,7 @@
                 </executions>
                 <configuration>
                     <driver>${mysql.driver}</driver>
-                    <url>jdbc:mysql://localhost:${db.port}?useSSL=false</url>
+                    <url>jdbc:mysql://localhost:${mysql.port}?useSSL=false</url>
                     <username>${db.root.user}</username>
                     <password>${db.root.password}</password>
                     <skip>${skipDbInit}</skip>
@@ -119,7 +119,7 @@
                 <configuration>
                     <jdbc>
                         <driver>${mysql.driver}</driver>
-                        <url>jdbc:mysql://localhost:${db.port}/${db.name}?useSSL=false</url>
+                        <url>jdbc:mysql://localhost:${mysql.port}/${db.name}?useSSL=false</url>
                         <user>${db.developer.user}</user>
                         <password>${db.developer.password}</password>
                     </jdbc>

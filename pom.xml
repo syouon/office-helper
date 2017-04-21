@@ -22,6 +22,7 @@
 
         <!-- PLUGINS -->
         <sql-maven.version>1.5</sql-maven.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
 
         <sql.schema.location>../config/database/schema.sql</sql.schema.location>
 
