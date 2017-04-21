@@ -1,6 +1,7 @@
 package com.officehelper.service.impl;
 
 import com.officehelper.domain.Request;
+import com.officehelper.domain.RequestStatus;
 import com.officehelper.domain.exception.DataNotFoundException;
 import com.officehelper.repository.RequestRepository;
 import com.officehelper.service.RequestService;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -52,7 +53,7 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public Request delete(long id) {
         Request request = requestRepository.get(id);
-        if(!requestRepository.delete(id)) {
+        if (!requestRepository.delete(id)) {
             logger.warn("Unable to find request [{}] for deletion", id);
             throw new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, id));
         }
@@ -72,5 +73,55 @@ public class RequestServiceImpl implements RequestService {
             logger.warn("Unable to find request [{}]", id);
             return new DataNotFoundException(String.format(REQUEST_ID_NOT_FOUND_MESSAGE, id));
         });
+    }
+
+    @Override
+    @Transactional
+    public void accept(Request request) {
+        updateRequestWithNewStatus(request, RequestStatus.ACCEPTED);
+        logger.info("Request [{}] accepted", request.getId());
+    }
+
+    @Override
+    @Transactional
+    public void cancel(Request request) {
+        updateRequestWithNewStatus(request, RequestStatus.CANCELED);
+        logger.info("Request [{}] canceled", request.getId());
+    }
+
+    @Override
+    @Transactional
+    public void refuse(Request request) {
+        updateRequestWithNewStatus(request, RequestStatus.REFUSED);
+        logger.info("Request [{}] refused", request.getId());
+    }
+
+    @Override
+    @Transactional
+    public void order(Request request) {
+        request.setOrderDate(LocalDateTime.now());
+        updateRequestWithNewStatus(request, RequestStatus.ORDERED);
+        logger.info("Request [{}] ordered", request.getId());
+    }
+
+    @Override
+    @Transactional
+    public void setAsDelivered(Request request) {
+        request.setReceptionDate(LocalDateTime.now());
+        updateRequestWithNewStatus(request, RequestStatus.DELIVERED);
+        logger.info("Request [{}] delivered", request.getId());
+    }
+
+    @Override
+    @Transactional
+    public void setAsNotDelivered(Request request) {
+        updateRequestWithNewStatus(request, RequestStatus.NOT_DELIVERED);
+        logger.info("Request [{}] has not been delivered", request.getId());
+    }
+
+    private void updateRequestWithNewStatus(Request request, RequestStatus newStatus) {
+        request.getStatus().verifyNextStatus(newStatus);
+        request.setStatus(newStatus);
+        requestRepository.update(request);
     }
 }

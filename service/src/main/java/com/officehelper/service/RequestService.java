@@ -17,4 +17,16 @@ public interface RequestService {
     List<Request> findAll();
 
     Request getOne(long id);
+
+    void accept(Request request);
+
+    void cancel(Request request);
+
+    void refuse(Request request);
+
+    void order(Request request);
+
+    void setAsDelivered(Request request);
+
+    void setAsNotDelivered(Request request);
 }
