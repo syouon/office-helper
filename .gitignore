@@ -1,4 +1,8 @@
+# Java files
 *.class
+
+# Database properties
+repository/src/main/resources/database.properties
 
 # Package Files #
 *.jar
