@@ -40,6 +40,26 @@
 
     <build>
         <plugins>
+            <!-- Property maven plugin to read properties in externalized file -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>${properties-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>src/main/resources/database.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- MYSQL DATABASE INIT -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -70,8 +90,8 @@
                 <configuration>
                     <driver>${mysql.driver}</driver>
                     <url>jdbc:mysql://localhost:${mysql.port}?useSSL=false</url>
-                    <username>${mysql.root.user}</username>
-                    <password>${mysql.root.password}</password>
+                    <username>${db.root.user}</username>
+                    <password>${db.root.password}</password>
                     <skip>${skipDbInit}</skip>
                 </configuration>
             </plugin>
@@ -99,9 +119,9 @@
                 <configuration>
                     <jdbc>
                         <driver>${mysql.driver}</driver>
-                        <url>jdbc:mysql://localhost:${mysql.port}/${mysql.database}?useSSL=false</url>
-                        <user>${mysql.user}</user>
-                        <password>${mysql.password}</password>
+                        <url>jdbc:mysql://localhost:${mysql.port}/${db.name}?useSSL=false</url>
+                        <user>${db.developer.user}</user>
+                        <password>${db.developer.password}</password>
                     </jdbc>
                     <generator>
                         <name>org.jooq.util.JavaGenerator</name>

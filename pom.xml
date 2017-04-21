@@ -22,15 +22,8 @@
 
         <!-- PLUGINS -->
         <sql-maven.version>1.5</sql-maven.version>
+        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
 
-        <!-- DATABASE CREDENTIALS -->
-        <mysql.port>3306</mysql.port>
-        <mysql.driver>com.mysql.jdbc.Driver</mysql.driver>
-        <mysql.database>officehelper_db</mysql.database>
-        <mysql.root.user>root</mysql.root.user>
-        <mysql.root.password></mysql.root.password>
-        <mysql.user>developer</mysql.user>
-        <mysql.password>d3v3l0p3r</mysql.password>
         <sql.schema.location>../config/database/schema.sql</sql.schema.location>
 
         <!-- Skip database's schema initialization -->
