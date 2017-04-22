@@ -1,0 +1,17 @@
+google:
+  client:
+    clientId: 182745472935-p018mr2s799kf5655bnjub0nc5rvshro.apps.googleusercontent.com
+    clientSecret: WopAeqfIsK7DnYreIeWnz5Ql
+    accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+    redirect_uri: http://localhost:8080/login/google
+    clientAuthenticationScheme: form
+    scope:
+      - openid
+      - email
+      - profile
+  resource:
+    userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+    preferTokenInfo: true
+
+spring.profiles.include: 'datasource'
