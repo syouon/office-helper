@@ -1,11 +1,8 @@
 package com.officehelper.web.controller;
 
-import com.officehelper.domain.exception.DataNotFoundException;
-import com.officehelper.domain.exception.InvalidRequestStatusException;
 import com.officehelper.service.RequestService;
 import com.officehelper.service.command.AddRequestCommand;
 import com.officehelper.service.command.UpdateRequestCommand;
-import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.web.dto.RequestDto;
 import com.officehelper.web.dto.mapper.RequestDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -20,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/requests")
-public class RequestRestController {
+public class RequestRestController extends AbstractController {
 
     private RequestService requestService;
     private final RequestDtoMapper dtoMapper;
@@ -94,17 +91,5 @@ public class RequestRestController {
     @PostMapping("/{id}/delivery/failed")
     public void requestNotDelivered(@PathVariable long id) {
         requestService.setAsNotDelivered(requestService.getOne(id));
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(DataNotFoundException.class)
-    private ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(InvalidRequestStatusException.class)
-    private ErrorResponse handleInvalidRequestStatusException(InvalidRequestStatusException e) {
-        return new ErrorResponse(e.getMessage());
     }
 }

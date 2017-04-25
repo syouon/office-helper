@@ -1,9 +1,6 @@
 package com.officehelper.web.controller;
 
 import com.officehelper.domain.User;
-import com.officehelper.domain.exception.DataNotFoundException;
-import com.officehelper.domain.exception.DuplicateEntityException;
-import com.officehelper.web.dto.ErrorResponse;
 import com.officehelper.service.UserService;
 import com.officehelper.service.command.AddUserCommand;
 import com.officehelper.service.command.UpdateUserCommand;
@@ -18,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserRestController {
+public class UserRestController extends AbstractController {
 
     private UserService userService;
 
@@ -57,17 +54,5 @@ public class UserRestController {
     @GetMapping("/{id}")
     public User findOne(@PathVariable long id) {
         return userService.getOne(id);
-    }
-
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(DataNotFoundException.class)
-    private ErrorResponse handleDataNotFoundException(DataNotFoundException e) {
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DuplicateEntityException.class)
-    private ErrorResponse handleDuplicateEntityException(DuplicateEntityException e) {
-        return new ErrorResponse(e.getMessage());
     }
 }
