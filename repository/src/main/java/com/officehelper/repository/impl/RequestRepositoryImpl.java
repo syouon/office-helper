@@ -71,7 +71,8 @@ public class RequestRepositoryImpl implements RequestRepository {
 
     @Override
     public Request get(long id) {
-        return findOne(id).orElseThrow(() -> new DataNotFoundException(String.format("Impossible to find request [%d]", id)));
+        return findOne(id)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Impossible to find request [%d]", id)));
     }
 
     @Override

@@ -23,6 +23,7 @@
         <!-- PLUGINS -->
         <sql-maven.version>1.5</sql-maven.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
+        <checkstyle.version>2.17</checkstyle.version>
 
         <sql.schema.location>../config/database/schema.sql</sql.schema.location>
 
@@ -77,4 +78,29 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <executions>
+                    <execution>
+                        <id>Check code style</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <configLocation>checkstyle.xml</configLocation>
+                            <encoding>UTF-8</encoding>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
