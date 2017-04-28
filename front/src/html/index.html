@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Office Helper</title>
+    <link href="css/application.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<div id="login-splash" class="toggled">
+    <div class="container">
+        <div id="login-box">
+            <img src="img/logo_big.png" alt="Office helper!" class="img-responsive"/>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-signin">
+                        <h2 class="form-signin-heading">Office helper</h2>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block login-toggle" type="submit">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
+
+    <div id="sidebar-wrapper">
+        <div id="logo-button"><img src="img/logo_small.png" alt="Office helper !"/></div>
+        <a href="#" class="sidebar-button" data-toggle="tooltip" data-placement="right" title="Home"><span
+                class="glyphicon glyphicon-home"></span></a>
+        <a href="#" class="sidebar-button" data-toggle="tooltip" data-placement="right" title="Add a request"><span
+                class="glyphicon glyphicon-shopping-cart"></span></a>
+        <a href="#" class="sidebar-button" data-toggle="tooltip" data-placement="right" title="Statistics"><span
+                class="glyphicon glyphicon-signal"></span></a>
+        <a href="#" class="sidebar-button" data-toggle="tooltip" data-placement="right" title="Settings"><span
+                class="glyphicon glyphicon-cog"></span></a>
+    </div>
+
+    <div id="page-wrapper">
+        <div id="top-bar">
+            <div id="toggle-menu-button" class="pull-left">
+                <a href="#" id="menu-toggle" class="visible-xs-inline">
+                    <span class="open-menu material-icons">menu</span><!--
+                    --><span class="close-menu material-icons">close</span>
+                </a>
+            </div>
+            <div id="user-menu" class="pull-right">
+                <a id="dLabel" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    John Doe
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li><a href="#" class="login-toggle">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="page-content">
+            <div class="page-block">
+                <div class="container-fluid">
+                    <h1 class="page-title">Order requests</h1>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#">New order</a></li>
+                        <li role="presentation"><a href="#">In progress</a></li>
+                        <li role="presentation"><a href="#">Received</a></li>
+                    </ul>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form>
+                        <div class="form-group"><label for="exampleInputEmail1">Email address</label> <input
+                                class="form-control" id="exampleInputEmail1" placeholder="Email" type="email"></div>
+                        <div class="form-group"><label for="exampleInputPassword1">Password</label> <input
+                                class="form-control" id="exampleInputPassword1" placeholder="Password"
+                                type="password">
+                        </div>
+                        <div class="form-group"><label for="exampleInputFile">File input</label> <input
+                                id="exampleInputFile" type="file">
+                            <p class="help-block">Example block-level help text here.</p></div>
+                        <div class="checkbox"><label> <input type="checkbox"> Check me out </label></div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    $(".login-toggle").click(function (e) {
+        e.preventDefault();
+        $("#login-splash").toggleClass("toggled");
+    });
+</script>
+</body>
+</html>
